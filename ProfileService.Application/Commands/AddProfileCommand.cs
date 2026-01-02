@@ -20,7 +20,7 @@ namespace ProfileService.Application.Commands
 
         public async Task Handle(AddProfileCommand request, CancellationToken cancellationToken)
         {
-            await _profileRepository.AddAsync(request.userId,request.name,request.email,request.phoneNo);
+            await _profileRepository.AddProfileAsync(request.userId,request.name,request.email,request.phoneNo);
         }
 
        

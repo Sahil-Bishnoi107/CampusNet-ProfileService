@@ -9,6 +9,7 @@ using ProfileService.Domain.Interfaces;
 using ProfileService.Infrastructure.Persistence;
 using ProfileService.Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
+using ProfileService.Infrastructure.Messaging;
 
 namespace ProfileService.Infrastructure
 {
@@ -21,6 +22,9 @@ namespace ProfileService.Infrastructure
             services.AddScoped<IProfileRepository,ProfileRepository>();
             services.AddScoped<IJwtRepository, JwtRepository>();
             services.AddHttpContextAccessor();
+            services.AddSingleton<RabbitMqConnection>();
+            services.AddHostedService<RabbitMqConsumerRepository>();
+
 
             return services;
         }

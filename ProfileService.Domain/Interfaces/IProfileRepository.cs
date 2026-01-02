@@ -9,7 +9,7 @@ namespace ProfileService.Domain.Interfaces
 {
     public interface IProfileRepository
     {
-        Task AddAsync(string userId,string name,string email,string phoneNo);
+        Task AddProfileAsync(string userId,string name,string email,string phoneNo);
 
         Task<Profile> GetMyProfile();
         Task<Profile> GetByIdAsync(string id);

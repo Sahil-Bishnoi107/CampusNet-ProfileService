@@ -16,10 +16,6 @@
 # Mono auto generated files
 mono_crash.*
 
-# Ignore all appsettings files
-appsettings.json
-appsettings.*.json
-
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -365,5 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/ProfileService.API/appsettings.json
-/ProfileService.API/appsettings.Development.json

@@ -19,10 +19,11 @@ namespace ProfileService.Infrastructure.Repositories
             _context = context;
             _jwtRepository = jwtRepository;
         }
-        public async Task AddAsync(string userId,string name,string email,string phoneNo)
+        public async Task AddProfileAsync(string userId,string name,string email,string phoneNo)
         {
             Profile profile = new Profile(userId,email, name, phoneNo);
            await  _context.Profiles.AddAsync(profile);
+            await _context.SaveChangesAsync();
 
         }
 
