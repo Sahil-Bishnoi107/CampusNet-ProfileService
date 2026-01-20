@@ -14,5 +14,9 @@ namespace ProfileService.Domain.Interfaces
         Task<Profile> GetMyProfile();
         Task<Profile> GetByIdAsync(string id);
         Task UpdateAsync(string? username,string? bio,string? rollno, string? collegeEmail,string? githubLink,string? linkedinLink,string? profilePicLink,string? branch,string? degree);
+
+        Task<bool> ConfirmCollege(string collegeEmail, string otp);
+
+        Task<bool> ConfirmPhoneNo(string phoneNo,string otp);    
     }
 }

@@ -63,6 +63,13 @@ namespace ProfileService.Domain.Entities
             if (degree != null) Degree = degree;
         }
 
-
+        public void UpdateCollegeEmail(string collegeEmail)
+        {
+            CollegeEmail = collegeEmail;
+        }
+        public void UpdatePhoneNo(string phoneNo)
+        {
+            PhoneNo = phoneNo;
+        }
     }
 }

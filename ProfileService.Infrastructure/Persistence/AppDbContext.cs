@@ -13,7 +13,10 @@ namespace ProfileService.Infrastructure.Persistence
 
     {
         public DbSet<Profile> Profiles => Set<Profile>();
+        public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<Report> Reports => Set<Report>();
 
+        public DbSet<ProfileOtps> ProfileOtps => Set<ProfileOtps>();
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,7 +30,29 @@ namespace ProfileService.Infrastructure.Persistence
 
             });
 
+            modelBuilder.Entity<Review>(e =>
+            {
+                e.ToTable("reviews");
+                e.HasKey(x => x.id);
+                e.HasIndex(x => new { x.reviewerId, x.reviewedId }).IsUnique();
+            });
+
+            modelBuilder.Entity<Report>(e =>
+            {
+                e.ToTable("reports");
+                e.HasKey(x => x.id);
+                e.HasIndex(x => new { x.reporterId, x.reportedId }).IsUnique();
+            });
+
+            modelBuilder.Entity<ProfileOtps>(e =>
+            {
+                e.ToTable("profile_otps");
+                e.HasKey(x => x.Id);
+                
+            });
+
         }
+        
 
     }
 }

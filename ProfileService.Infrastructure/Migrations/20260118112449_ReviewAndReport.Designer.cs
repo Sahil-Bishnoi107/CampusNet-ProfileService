@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProfileService.Infrastructure.Persistence;
@@ -11,9 +12,11 @@ using ProfileService.Infrastructure.Persistence;
 namespace ProfileService.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260118112449_ReviewAndReport")]
+    partial class ReviewAndReport
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,38 +79,6 @@ namespace ProfileService.Infrastructure.Migrations
                     b.ToTable("profiles", (string)null);
                 });
 
-            modelBuilder.Entity("ProfileService.Domain.Entities.ProfileOtps", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Otp")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("profile_otps", (string)null);
-                });
-
             modelBuilder.Entity("ProfileService.Domain.Entities.Report", b =>
                 {
                     b.Property<string>("id")
@@ -118,10 +89,6 @@ namespace ProfileService.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("reportedId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("reportedName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -146,10 +113,6 @@ namespace ProfileService.Infrastructure.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("reviewedId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("reviewedName")
                         .IsRequired()
                         .HasColumnType("text");
 

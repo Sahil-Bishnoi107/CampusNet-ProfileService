@@ -24,7 +24,9 @@ namespace ProfileService.Infrastructure
             services.AddHttpContextAccessor();
             services.AddSingleton<RabbitMqConnection>();
             services.AddHostedService<RabbitMqConsumerRepository>();
-
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>(); 
+            services.AddScoped<ISmsRepository, SmsRepository>();
 
             return services;
         }
