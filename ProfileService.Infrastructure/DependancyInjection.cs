@@ -27,6 +27,7 @@ namespace ProfileService.Infrastructure
             services.AddScoped<IReportRepository, ReportRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>(); 
             services.AddScoped<ISmsRepository, SmsRepository>();
+            services.AddScoped<INotificationPublisher, RabbitMqNotificationPublisher>();
 
             return services;
         }

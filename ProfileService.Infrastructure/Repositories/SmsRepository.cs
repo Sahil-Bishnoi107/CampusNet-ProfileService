@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using ProfileService.Domain.Entities;
 using ProfileService.Domain.Interfaces;
 using ProfileService.Infrastructure.Persistence;
@@ -13,9 +14,14 @@ namespace ProfileService.Infrastructure.Repositories
     {
         private readonly IJwtRepository _jwtRepository;
         private readonly AppDbContext _context;
-        public SmsRepository(IJwtRepository jwtRepository, AppDbContext context) {
+        private readonly INotificationPublisher _notificationPublisher;
+        private readonly ILogger<SmsRepository> _logger;
+        public SmsRepository(IJwtRepository jwtRepository, AppDbContext context, INotificationPublisher notificationPublisher, ILogger<SmsRepository> logger)
+        {
             _jwtRepository = jwtRepository;
             _context = context;
+            _notificationPublisher = notificationPublisher;
+            _logger = logger;
         }
 
         public async Task SendOtpOnMail(string email)
@@ -29,6 +35,13 @@ namespace ProfileService.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             // Implemet the sms servfice here
+          await  _notificationPublisher.PublishEmailAsync(new Domain.DTOs.NotificationMessage
+          {
+              To = email,
+              Subject = "Your OTP Code",
+              Message = $"Your OTP code is {otp}. It will expire in 15 minutes."
+          });
+            _logger.LogInformation("CollegeEmail OTP sent on {email}",email);
 
         }
 
@@ -43,6 +56,12 @@ namespace ProfileService.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             // Implemet the sms servfice here
+            await _notificationPublisher.PublishSmsAsync(new Domain.DTOs.NotificationMessage
+            {
+                To = phoneNo,
+                Message = $"Your OTP code is {otp}. It will expire in 15 minutes."
+            });
+            _logger.LogInformation("PhoneNo OTP sent on {phoneNo}", phoneNo);
         }
     }
 }
