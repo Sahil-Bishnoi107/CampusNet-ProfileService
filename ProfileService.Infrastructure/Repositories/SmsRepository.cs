@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProfileService.Domain.Entities;
 using ProfileService.Domain.Interfaces;
@@ -26,12 +27,21 @@ namespace ProfileService.Infrastructure.Repositories
 
         public async Task SendOtpOnMail(string email)
         {
+            var exists = await _context.ProfileOtps.Where(x => x.Address == email && x.Type == "Mail").FirstOrDefaultAsync();
             
             DateTime date = DateTime.UtcNow.AddMinutes(15);
             string id = _jwtRepository.GenerateUserId();
             string otp = Random.Shared.Next(100000, 999999).ToString();
             ProfileOtps profileOtps = new ProfileOtps(id, "Mail", otp, date,email);
-            _context.ProfileOtps.Add(profileOtps);
+            if (exists == null)
+            {
+                _context.ProfileOtps.Add(profileOtps);
+            }
+            else
+            {
+                exists.UpdateOtp(otp);
+                _context.ProfileOtps.Update(exists);
+            }
             await _context.SaveChangesAsync();
 
             // Implemet the sms servfice here

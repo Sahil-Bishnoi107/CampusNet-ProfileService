@@ -37,6 +37,12 @@ namespace ProfileService.Domain.Entities
         {
             Status = true;
         }
+        public void UpdateOtp(string otp)
+        {
+            Otp = otp;
+            ExpiresAt = DateTime.UtcNow.AddMinutes(15);
+            Status = false;
+        }
 
     }
 }
