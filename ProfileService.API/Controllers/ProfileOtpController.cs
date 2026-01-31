@@ -7,7 +7,7 @@ using ProfileService.Application.Commands;
 namespace ProfileService.API.Controllers
 {
     [Authorize]
-    [Route("campus-net/otps")]
+    [Route("campus-net/profile/otps")]
     [ApiController]
     public class ProfileOtpController : ControllerBase
     {
